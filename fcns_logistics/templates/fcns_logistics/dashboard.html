@@ -42,7 +42,7 @@
                 <tbody>
                     {% for route in routes %}
                     <tr>
-                        <td>{{ route.origin }}</td>
+                        <td><a href="{% url 'fcns_logistics:route_detail' route.id %}" style="color: #2980b9; text-decoration: none; font-weight: bold;">{{ route.origin }}</a></td>>
                         <td>{{ route.destination }}</td>
                         <td>{{ route.truck.license_plate }}</td>
                         <td>{{ route.driver.username }}</td>

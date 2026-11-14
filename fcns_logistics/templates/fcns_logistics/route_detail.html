@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle de Ruta - FCNS</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f7f6; color: #333; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h1, h2 { color: #2c3e50; }
+        .info-box { background: #e8f4f8; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #2c3e50; color: white; }
+        .total { font-size: 18px; font-weight: bold; margin-top: 15px; text-align: right; color: #27ae60; }
+        a.btn { display: inline-block; padding: 10px 15px; background: #2c3e50; color: white; text-decoration: none; border-radius: 4px; margin-top: 20px; }
+        a.btn:hover { background: #34495e; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Detalle de la Ruta</h1>
+        
+        <div class="info-box">
+            <p><strong>Origen:</strong> {{ route.origin }}</p>
+            <p><strong>Destino:</strong> {{ route.destination }}</p>
+            <p><strong>Camión:</strong> {{ route.truck.license_plate }}</p>
+            <p><strong>Conductor:</strong> {{ route.driver.username }}</p>
+            <p><strong>Estado:</strong> {{ route.get_status_display }}</p>
+        </div>
+
+        <h2>Gastos Asociados</h2>
+        {% if expenses %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Categoría</th>
+                        <th>Monto</th>
+                        <th>Descripción</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for expense in expenses %}
+                    <tr>
+                        <td>{{ expense.category.name }}</td>
+                        <td>${{ expense.amount }}</td>
+                        <td>{{ expense.description|default:"Sin descripción" }}</td>
+                        <td>{{ expense.date|date:"d/m/Y H:i" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="total">
+                Total Gastos: ${{ total_expenses }}
+            </div>
+        {% else %}
+            <p>No hay gastos registrados para esta ruta todavía.</p>
+        {% endif %}
+
+        <a href="{% url 'fcns_logistics:dashboard' %}" class="btn">← Volver al Dashboard</a>
+    </div>
+</body>
+</html>
