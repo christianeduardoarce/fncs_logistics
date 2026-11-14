@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Route
 from .forms import ExpenseForm
+from django.contrib.auth.views import LoginView, LogoutView
 
 @login_required
 def dashboard_view(request):
@@ -46,3 +47,11 @@ def route_detail_view(request, pk):
         'total_expenses': total_expenses,
     }
     return render(request, 'fcns_logistics/route_detail.html', context)
+
+#login and logout views
+class CustomLoginView(LoginView):
+    template_name = 'fcns_logistics/login.html'
+    redirect_authenticated_user = True
+
+class CustomLogoutView(LogoutView):
+    next_page = 'fcns_logistics:login'

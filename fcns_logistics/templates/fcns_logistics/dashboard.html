@@ -23,6 +23,12 @@
         <div class="user-info">
             <p><strong>Usuario:</strong> {{ user.username }}</p>
             <p><strong>Rol:</strong> {{ user.get_role_display }}</p>
+            <div style="float: right;">
+    <form action="{% url 'fcns_logistics:logout' %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" style="background: #e74c3c; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">Cerrar Sesión</button>
+    </form>
+</div>
         </div>
 
         <a href="{% url 'fcns_logistics:add_expense' %}" class="btn" style="background: #27ae60;">+ Registrar Gasto</a>

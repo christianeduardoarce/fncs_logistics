@@ -125,3 +125,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'fcns_logistics.User'
 
 LOGIN_URL = '/admin/login/'
+LOGIN_URL = 'fcns_logistics:login'
+LOGIN_REDIRECT_URL = 'fcns_logistics:dashboard'
+LOGOUT_REDIRECT_URL = 'fcns_logistics:login'
