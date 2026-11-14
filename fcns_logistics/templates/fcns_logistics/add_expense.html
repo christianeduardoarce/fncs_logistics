@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Gasto - FCNS</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f7f6; color: #333; }
+        .container { max-width: 500px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; font-size: 22px; }
+        form p { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input, select, textarea { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { background: #27ae60; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-size: 16px; width: 100%; }
+        button:hover { background: #219150; }
+        .back-link { display: block; text-align: center; margin-top: 15px; color: #2c3e50; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Registrar Nuevo Gasto</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Guardar Gasto</button>
+        </form>
+        <a href="{% url 'fcns_logistics:dashboard' %}" class="back-link">← Volver al Dashboard</a>
+    </div>
+</body>
+</html>

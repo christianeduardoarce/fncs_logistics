@@ -25,6 +25,7 @@
             <p><strong>Rol:</strong> {{ user.get_role_display }}</p>
         </div>
 
+        <a href="{% url 'fcns_logistics:add_expense' %}" class="btn" style="background: #27ae60;">+ Registrar Gasto</a>
         <h2>Rutas Asignadas</h2>
         {% if routes %}
             <table>
