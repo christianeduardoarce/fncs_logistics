@@ -15,8 +15,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path, incluide
+from django.shortcuts import redirect
+
+def home_redirect(request):
+    return redirect('fcns_logistics:dashboard')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('app/', include('fcns_logistics.urls')),
+    path('', home_redirect, name='home')
 ]
