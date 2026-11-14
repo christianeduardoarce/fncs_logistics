@@ -15,6 +15,5 @@ class ExpenseForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
-        # Si el usuario es conductor, solo puede elegir sus propias rutas asignadas
         if user and user.role == 'DRIVER':
             self.fields['route'].queryset = Route.objects.filter(driver=user)

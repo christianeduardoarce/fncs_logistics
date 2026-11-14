@@ -1,13 +1,11 @@
-
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Route, Truck, Expense
+from .models import Route
+from .forms import ExpenseForm
 
 @login_required
 def dashboard_view(request):
     user = request.user
-    
-    # Si es conductor, solo ve sus rutas. Si es manager/admin, ve todas.
     if user.role == 'DRIVER':
         routes = Route.objects.filter(driver=user)
     else:
@@ -18,3 +16,15 @@ def dashboard_view(request):
         'user': user,
     }
     return render(request, 'fcns_logistics/dashboard.html', context)
+
+@login_required
+def add_expense_view(request):
+    if request.method == 'POST':
+        form = ExpenseForm(request.POST, user=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('fcns_logistics:dashboard')
+    else:
+        form = ExpenseForm(user=request.user)
+        
+    return render(request, 'fcns_logistics/add_expense.html', {'form': form})
