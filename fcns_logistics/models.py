@@ -60,4 +60,25 @@ class Route(models.Model):
 
 def __str__(self):
     return f"{self.origin} → {self.destination} ({self.truck.license_plate})"
-    
+
+    #parte de iker
+class ExpenseCategory(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=50, unique=True)
+    description = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+
+    #parte de iker
+class Expense(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    route = models.ForeignKey(Route, on_delete=models.CASCADE, related_name='expenses')
+    category = models.ForeignKey(ExpenseCategory, on_delete=models.PROTECT, related_name='expenses')
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    description = models.TextField(blank=True, null=True)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.category.name} - ${self.amount} ({self.route})"
