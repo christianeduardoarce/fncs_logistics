@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Logística - FCNS</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f7f6; color: #333; }
+        .container { max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; }
+        .user-info { background: #e8f4f8; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #2c3e50; color: white; }
+        a.btn { display: inline-block; padding: 10px 15px; background: #2c3e50; color: white; text-decoration: none; border-radius: 4px; margin-top: 15px; }
+        a.btn:hover { background: #34495e; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Panel de Control de Flota</h1>
+        
+        <div class="user-info">
+            <p><strong>Usuario:</strong> {{ user.username }}</p>
+            <p><strong>Rol:</strong> {{ user.get_role_display }}</p>
+        </div>
+
+        <h2>Rutas Asignadas</h2>
+        {% if routes %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Origen</th>
+                        <th>Destino</th>
+                        <th>Camión</th>
+                        <th>Conductor</th>
+                        <th>Estado</th>
+                        <th>Fecha de Salida</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for route in routes %}
+                    <tr>
+                        <td>{{ route.origin }}</td>
+                        <td>{{ route.destination }}</td>
+                        <td>{{ route.truck.license_plate }}</td>
+                        <td>{{ route.driver.username }}</td>
+                        <td>{{ route.get_status_display }}</td>
+                        <td>{{ route.departure_date }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No hay rutas registradas o asignadas actualmente.</p>
+        {% endif %}
+
+        {% if user.is_staff %}
+            <a href="{% url 'admin:index' %}" class="btn">Ir al Panel de Administración</a>
+        {% endif %}
+    </div>
+</body>
+</html>
